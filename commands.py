@@ -44,7 +44,7 @@ def os_info():
 
 
 def os_version():
-    print(Fore.BLUE + "LittleOS V0.0.1 " + Style.RESET_ALL)
+    print(Fore.BLUE + "LittleOS V0.1.6 " + Style.RESET_ALL)
 
 
 def python_doc():

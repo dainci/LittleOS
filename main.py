@@ -14,7 +14,7 @@ print("   ██   ██ ███████ ███████        █
 print("                                                                             ")
 print("                                                          Classic            ")
 print(Style.RESET_ALL)
-print("this is a beta ! V0.1.5")
+print("this is a beta !")
 time.sleep(0.5)
 
 selected_tool = "classic"
