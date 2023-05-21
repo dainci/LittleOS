@@ -1,6 +1,6 @@
 # LittleOS (or AllTools)
 
-[LittleOS (AllTools)](https://github.com/dainci/LittleOS/assets/91798430/726e9b3a-812a-432e-91c2-7ab3c184569b)
+![LittleOS (AllTools)](https://github.com/dainci/LittleOS/assets/91798430/726e9b3a-812a-432e-91c2-7ab3c184569b)
 
 ### classic version!
 
