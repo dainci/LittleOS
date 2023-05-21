@@ -4,17 +4,24 @@ import time
 import shlex
 import os
 
-print(Back.CYAN + Fore.BLACK + "           dainci                                                            ")
-print("                                                                             ")
-print("    █████  ██      ██          ████████  ██████   ██████  ██      ███████    ")
-print("   ██   ██ ██      ██             ██    ██    ██ ██    ██ ██      ██         ")
-print("   ███████ ██      ██             ██    ██    ██ ██    ██ ██      ███████    ")
-print("   ██   ██ ██      ██             ██    ██    ██ ██    ██ ██           ██    ")
-print("   ██   ██ ███████ ███████        ██     ██████   ██████  ███████ ███████    ")
-print("                                                                             ")
-print("                                                          Classic            ")
-print(Style.RESET_ALL)
-print("this is a beta !")
+
+def littleos():
+    print(Back.CYAN + Fore.BLACK + "           dainci                                                            ")
+    print("                                                                             ")
+    print("    █████  ██      ██          ████████  ██████   ██████  ██      ███████    ")
+    print("   ██   ██ ██      ██             ██    ██    ██ ██    ██ ██      ██         ")
+    print("   ███████ ██      ██             ██    ██    ██ ██    ██ ██      ███████    ")
+    print("   ██   ██ ██      ██             ██    ██    ██ ██    ██ ██           ██    ")
+    print("   ██   ██ ███████ ███████        ██     ██████   ██████  ███████ ███████    ")
+    print("                                                                             ")
+    print("                                                          Classic            ")
+    print(Style.RESET_ALL)
+    print("this is a beta !")
+
+littleos()
+    
+
+
 time.sleep(0.5)
 
 username = "classic"
@@ -22,13 +29,13 @@ default_path = os.path.dirname(os.path.abspath(__file__))
 
 cmds = {
     'cd': commands.cd,
-    'clear': commands.clear,
+    'clear': lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), littleos()),
     'exit': exit,
     'help': commands.help,
     'ls': commands.ls,
-#   'mkdir': commands.mkdir,
+#    'mkdir': commands.mkdir,
     'os': commands.os, # -doc; -info; -v
-    'python': commands.python,
+    'python': commands.python, #doc
     'rm': commands.rm,
     'touch': commands.touch,
 

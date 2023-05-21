@@ -1,7 +1,8 @@
 from colorama import Fore, Back, Style
 import os
+from tabulate import tabulate
 
-
+OSversion = 'v0.1.8'
 
 def cd(args):
     if not args:
@@ -14,15 +15,30 @@ def cd(args):
         os.chdir(path)
 
 
-def clear(args):
-    os.system('cls' if os.name == 'nt' else 'clear')
+"""def clear_screen(args):
+    if len(args) == 0:
+        os.system('cls' if os.name == 'nt' else 'clear')
+    else:
+        print(Fore.RED + "this commands dont have any arguments" + Style.RESET_ALL)"""
+        
 
 
 def ls(args):
-    import os  # Importer os à l'intérieur de la fonction
-    directory = '.'
-    files = os.listdir(directory)
-    print(Fore.BLUE + '    '.join(files) + Style.RESET_ALL)
+    import os
+    
+
+    if '-fi' in args and '-fo' in args:
+        print(Fore.RED + "Error: Cannot specify both -fi and -fo.")
+        return
+    elif '-fi' in args:
+        files = [f for f in os.listdir() if os.path.isfile(f)]
+        for file in files:
+            print(file)
+    else:
+        folders = [f for f in os.listdir() if os.path.isdir(f)]
+        for folder in folders:
+            print(folder)
+    
 
 """
 def mkdir(args):
@@ -37,14 +53,21 @@ def mkdir(args):
     
     
 def os(args):
+    url = "https://github.com/dainci/LittleOS/wiki"
+    
     if len(args) == 0:
         print(Fore.RED + "Error: OS command requires arguments" + Style.RESET_ALL)
     elif args[0] == "-doc":
-        print("OS documentation...")
+        print("The official documentation of LittleOS : " + Fore.CYAN + url + Style.RESET_ALL)
     elif args[0] == "-v":
-        print("v0.1.7")
+        print(OSversion)
     elif args[0] == "-info":
-        print("OS info...")
+        table_data = [
+        ["users", "OS version", "OS type"],
+        ["username", OSversion, Fore.CYAN + "Classic" + Style.RESET_ALL],
+        ]
+        table = tabulate(table_data, headers="firstrow", tablefmt="fancy_grid")
+        print(table)
     else:
         print(Fore.RED + "Unknown OS command" + Style.RESET_ALL)
 
@@ -74,7 +97,7 @@ def touch(file_path):
             os.utime(file_path, None)
     except OSError:
         print(f"Erreur: Impossible de créer {file_path}")
-
+         
 
 def help(args):
     if len(args) == 0:
