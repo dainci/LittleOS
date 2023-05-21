@@ -5,3 +5,5 @@
 ### classic version
 
 LittleOS is an operating system coded entirely in Python, developed from scratch. Although the project is currently an overlay of the existing OS, the ultimate goal is to be able to run it directly on a blank computer
+
+![image](https://github.com/dainci/LittleOS/assets/91798430/b51ab888-cba4-4976-82de-cd5bab836064)
