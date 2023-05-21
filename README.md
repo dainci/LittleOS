@@ -1,8 +1,9 @@
 # LittleOS (or AllTools)
 
-![LittleOS](https://github.com/dainci/LittleOS/assets/91798430/f438b9f0-9237-411f-8517-ffe7230e7636)
+[LittleOS (AllTools)](https://github.com/dainci/LittleOS/assets/91798430/726e9b3a-812a-432e-91c2-7ab3c184569b)
 
-### classic version
+### classic version!
+
 
 LittleOS is an operating system coded entirely in Python, developed from scratch. Although the project is currently an overlay of the existing OS, the ultimate goal is to be able to run it directly on a blank computer.
 
