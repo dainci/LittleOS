@@ -28,7 +28,7 @@ username = "classic"
 default_path = os.path.dirname(os.path.abspath(__file__))
 
 cmds = {
-    'cd': commands.cd,
+#    'cd': commands.cd,
     'clear': lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), littleos()),
     'exit': exit,
     'help': commands.help,
@@ -36,8 +36,8 @@ cmds = {
 #    'mkdir': commands.mkdir,
     'os': commands.os, # -doc; -info; -v
     'python': commands.python, #doc
-    'rm': commands.rm,
-    'touch': commands.touch,
+#    'rm': commands.rm,
+#    'touch': commands.touch,
 
 }
 

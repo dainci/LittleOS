@@ -8,24 +8,17 @@ def cd(args):
     if not args:
         os.chdir(os.path.expanduser("~"))
     else:
-        path = os.path.join(*args)
+        path = ' '.join(args)
         if not os.path.isdir(path):
-            print("cd: %s: No such directory" % path)
+            print(f"cd: {path}: No such directory")
             return
         os.chdir(path)
 
-
-"""def clear_screen(args):
-    if len(args) == 0:
-        os.system('cls' if os.name == 'nt' else 'clear')
-    else:
-        print(Fore.RED + "this commands dont have any arguments" + Style.RESET_ALL)"""
         
-
 
 def ls(args):
     import os
-    
+
 
     if '-fi' in args and '-fo' in args:
         print(Fore.RED + "Error: Cannot specify both -fi and -fo.")
@@ -40,7 +33,7 @@ def ls(args):
             print(folder)
     
 
-"""
+
 def mkdir(args):
     if not args:
         print("mkdir: missing operand")
@@ -49,7 +42,7 @@ def mkdir(args):
         os.makedirs(args[0])
     except FileExistsError:
         print(f"mkdir: cannot create directory '{args[0]}': File exists")
-"""
+
     
     
 def os(args):
@@ -91,7 +84,6 @@ def rm(file_path):
 
 
 def touch(file_path):
-    """Crée un fichier vide avec le chemin spécifié"""
     try:
         with open(file_path, 'a'):
             os.utime(file_path, None)
