@@ -19,7 +19,6 @@ def littleos():
     print("this is a beta !")
 
 littleos()
-    
 
 
 time.sleep(0.5)
