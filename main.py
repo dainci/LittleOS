@@ -1,15 +1,11 @@
 from commands import basics, help_command, navigation
 from errors import osErrors
-from comon import first_install
-
-first_install.check_install_modules() #set up all the OS
-lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), littleos()),
 
 from colorama import Fore, Back, Style
 import time
 import shlex
 import os
-
+import sys
 
 def littleos():
     print(Back.CYAN + Fore.BLACK + "           dainci                                                            ")
@@ -23,7 +19,6 @@ def littleos():
     print("                                                          Classic            ")
     print(Style.RESET_ALL)
     print("this is a beta !")
-
 littleos()
 
 
@@ -44,22 +39,22 @@ cmds = {
     'python': basics.python, #doc
     'rm': navigation.rm,
     'touch': navigation.touch,
-
 }
 
 
 def unknown_command(args):
-    print(Fore.RED + "Unknown command" + Style.RESET_ALL)
+    print(f"{Fore.RED}Unknown command{Style.RESET_ALL}")
 
 def command_prompt(username):
     directory = os.getcwd().replace('\\', '/')
-    prompt = Fore.GREEN + "⁅" + directory + "⁆" + Fore.CYAN + "\n-{" + username + "}-> "
+    prompt = f"{Fore.GREEN}⁅{directory}⁆{Fore.CYAN}\n-[{username}]-> {Fore.RESET}"
     return prompt
 
-while True:
-    try:
+
+try:
+    while True:
         print(Style.RESET_ALL)
-        command = input(Fore.GREEN + command_prompt(username) + Style.RESET_ALL)
+        command = input(f"{Fore.WHITE}{command_prompt(username)}{Style.RESET_ALL}")
         print(Style.RESET_ALL)
         parts = shlex.split(command)
         cmd = parts[0]
@@ -72,5 +67,5 @@ while True:
         else:
             fn = cmds.get(cmd, unknown_command)
             fn(args)
-    except:
-        osErrors.handle_error(command, args)
+except:
+    osErrors.handle_error(command, args)
