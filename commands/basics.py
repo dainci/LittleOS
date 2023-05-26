@@ -2,22 +2,8 @@ import os
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 
-# Ouvrir le fichier en mode lecture
-'''with open('../docs/os_info.txt', 'r') as file:
-    # Parcourir chaque ligne du fichier
-    for line in file:
-        # Diviser la ligne en clé et valeur en utilisant le signe "="
-        key, value = line.strip().split('=')
-        # Supprimer les espaces inutiles autour de la clé et de la valeur
-        key = key.strip()
-        value = value.strip()
-        # Utiliser des conditions pour affecter les valeurs aux variables appropriées
-        if key == 'OS version':
-            osversion = value
-        elif key == 'OS type':
-            ostype = value'''
-
-
+osversion = 'v0.1.9'
+ostype = ''
 
 def os(args):
     url = "https://github.com/dainci/LittleOS/wiki"

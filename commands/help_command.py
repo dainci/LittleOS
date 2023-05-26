@@ -2,8 +2,6 @@ import os
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 
-OSversion = 'v0.1.9'
-
 def help(args):
     if len(args) == 0:
         print("all the basics commands available. for more specific commands type 'help -[command]' ")
