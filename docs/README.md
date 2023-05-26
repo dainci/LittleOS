@@ -9,7 +9,7 @@ LittleOS is an operating system coded entirely in Python, developed from scratch
 
 ### classic version!
 
-before running main.py, make sure you open the `first_install.py` file in the `comon` folder to install all the modules needed to run the program
+before running main.py, make sure you open the `install.py` file in the `comon` folder to install all the modules needed to run the program
 
 
 One of the greatest things about LittleOS is that, it will allow geeks to have fun, as all the code is in Python and easy to opreate. The operating system will be available in several versions, including an OSINT (Open Source Intelligence) focused version, a dedicated pentesting version and a classic blank version. LittleOS is primarily based on a command line interface, providing a more terminal-oriented computing experience.
