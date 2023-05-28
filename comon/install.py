@@ -10,7 +10,7 @@ if not os.path.isfile(requirements_file):
 
 with open(requirements_file, 'r') as file:
     required_modules = [line.strip() for line in file]
-    
+
 missing_modules = []
 for module in required_modules:
     try:

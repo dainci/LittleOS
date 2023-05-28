@@ -7,6 +7,7 @@ import urllib.request
 from tqdm import tqdm
 from colorama import Fore, Style
 
+"""
 def download_and_update_project(args):
     github_url = "https://github.com/dainci/LittleOS"
 
@@ -33,7 +34,8 @@ def download_and_update_project(args):
     source_dir = os.path.join("temp", f"repo-{branch}")
     target_dir = os.path.dirname(__file__)
 
-    for root, dirs, files in tqdm(os.walk(source_dir), desc="Copying files", bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt}"):
+    for root, dirs, files in tqdm(os.walk(source_dir), desc="Copying files",
+                                  bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt}"):
         # Ignorer le dossier "user"
         if "user" in dirs:
             dirs.remove("user")
@@ -66,3 +68,4 @@ if len(sys.argv) != 2:
 else:
     version = sys.argv[1].lower()
     download_and_update_project(version)
+"""

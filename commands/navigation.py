@@ -2,6 +2,8 @@ import os
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 
+from functions import initialisation
+
 # cd command, to enter a folder
 def cd(args):
     if not args:
@@ -54,3 +56,13 @@ def touch(file_path):
             os.utime(file_path, None)
     except OSError:
         print(f"Erreur: Impossible de créer {file_path}")
+        
+        
+def pwd(args): 
+    if len(args) == 0:
+        current_file = os.path.dirname(os.path.abspath(__file__))
+        parent_file = os.path.dirname(current_file)
+        path = f"path \n----- \n{parent_file}"
+        print(path)
+    else:
+        print("pwd not require an argument")
