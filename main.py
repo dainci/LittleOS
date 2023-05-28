@@ -1,6 +1,12 @@
+#little OS modules
 from commands import basics, help_command, navigation
+
 from errors import osErrors
 
+from functions import update
+from functions import network
+
+#others modules
 from colorama import Fore, Back, Style
 import time
 import shlex
@@ -39,6 +45,7 @@ cmds = {
     'python': basics.python, #doc
     'rm': navigation.rm,
     'touch': navigation.touch,
+    'ut': update.download_and_update_project
 }
 
 

@@ -2,3 +2,4 @@ colorama
 time
 shlex
 tabulate
+tqdm
