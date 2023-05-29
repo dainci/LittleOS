@@ -1,5 +1,4 @@
 import os
-from tabulate import tabulate
 from colorama import Fore, Back, Style
 
 osversion = 'v0.1.9'
@@ -19,7 +18,7 @@ def os(args):
         ["users", "OS version", "OS type"],
         ["username", osversion, Fore.CYAN + ostype + Style.RESET_ALL],
         ]
-        table = tabulate(table_data, headers="firstrow", tablefmt="fancy_grid")
+        # table = tabulate(table_data, headers="firstrow", tablefmt="fancy_grid") a changer
         print(table)
     else:
         print(Fore.RED + "Unknown OS command" + Style.RESET_ALL)
