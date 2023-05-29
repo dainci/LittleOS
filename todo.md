@@ -13,3 +13,6 @@
 - tab auto complete
 - afficher que les trois dernier dossier dans le path
 - afficher entierement le path a la commande "pwd"
+
+# message entre participant
+bref tchuss 😍
