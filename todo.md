@@ -15,4 +15,4 @@
 - afficher entierement le path a la commande "pwd"
 
 # message entre participant
-bref tchuss 😍
+

@@ -9,3 +9,4 @@ def restart_program(args):
         os.execl(python, python, *sys.argv)
     else:
         print("no")
+

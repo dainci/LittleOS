@@ -8,7 +8,7 @@ import main
 import os
 
 cmds = {
-    'cd': navigation.cd,
+#    'cd': navigation.cd,
     'exit': exit,
     'clear': lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), initialisation.littleos()),
     'help': help_command.help,

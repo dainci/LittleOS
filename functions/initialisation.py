@@ -39,18 +39,6 @@ def command_prompt(username):
     prompt = f"{Fore.GREEN}{'~/.../' if len(folders) > 3 else ''}{path}   {Fore.CYAN}\n=[{username}]=> {Fore.RESET}"
     return prompt
 
-
-def execute_command(command, args):
-    cmd = command.lower()
-    if cmd == "cd":
-        if args:
-            os.chdir(args[0])
-        else:
-            print("Error: cd command requires an argument")
-    else:
-        fn = commands.cmds.get(cmd, unknown_command)
-        fn(args)
-
 try:
     while True:
         print(Style.RESET_ALL)
@@ -60,9 +48,10 @@ try:
         cmd = parts[0]
         args = parts[1:]
         try:
-            execute_command(cmd, args)
+            pass
         except Exception as e:
             errors.handle_error(cmd, args)
             print("Error:", e)
 except KeyboardInterrupt:
     print("Program terminated by user")
+    u = input("enter to quit")

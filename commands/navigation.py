@@ -4,16 +4,9 @@ from colorama import Fore, Back, Style
 
 from functions import initialisation
 
-# cd command, to enter a folder
-def cd(args):
-    if not args:
-        os.chdir(os.path.expanduser("~"))
-    else:
-        path = ' '.join(args)
-        if not os.path.isdir(path):
-            print(f"cd: {path}: No such directory")
-            return
-        os.chdir(path)
+
+
+        
         
 # ls command, displays elements in current folder
 def ls(args):
