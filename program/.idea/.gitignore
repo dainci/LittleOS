@@ -6,3 +6,4 @@ logs/
 # ignored
 __pycache__/
 todo.md
+.idea/
