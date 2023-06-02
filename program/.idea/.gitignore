@@ -1,6 +1,8 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-/__pycache__/
-*.pyc
 logs/
+
+# ignored
+__pycache__/
+todo.md
