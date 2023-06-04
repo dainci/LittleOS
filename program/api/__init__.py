@@ -1,5 +1,2 @@
-from colorama import Fore, Back, Style
-import shlex
-import subprocess
-import time
-import os
+import program.commands.commands
+import program.commands.command_list

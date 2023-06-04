@@ -1,6 +1,12 @@
-import exeptions
+#import exeptions
+from program.commands import commands
+from program.commands import command_list
 
-import __init__
+from colorama import Fore, Back, Style
+import shlex
+import subprocess
+import time
+import os
 
 
 
@@ -28,20 +34,27 @@ while True:
     folders = parent_directory.split(os.sep)
     last_three_folders = folders[-3:]
     path = os.sep.join(last_three_folders).replace('\\', '/')
-    prompt = input(f"├──── {'~/.../' if len(folders) > 3 else ''}{path} ────┤\n└────>")
-    
+    prompt = input(f"\n{Fore.GREEN}┌── {'~/.../' if len(folders) > 3 else ''}{path} ──┤\n{Fore.CYAN}└───〉{Fore.RESET}")
+
+    if not prompt:
+        continue
+    else:
+        parts = shlex.split(prompt)
+        command = parts[0]
+        args = parts[1:]
+
+#    command args args
     if prompt.lower() == "exit":
         print("ended by user")
         time.sleep(0.3)
         break
 
     try:
-        if hasattr(help, prompt):
-            command_function = getattr(girgo, prompt)
-            command_function()
+        if command in command_list.cmd:
+            command_list.cmd[command](args)
+        
         else:
-            print("Commande non reconnue")
+            print(f"{Fore.RED}command not recognized{Fore.RESET}")
 
     except subprocess.CalledProcessError as e:
-        print("Erreur :", str(e))
-
+        print(f"{Fore.RED}Erreur :{str(e)}")
