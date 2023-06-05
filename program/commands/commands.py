@@ -56,6 +56,8 @@ def os(args):
 def python(args):
     if len(args) == 0:
         argument_error("python")
+    elif args[0] == "-doc":
+        print(Fore.BLUE + "https://docs.python.org/3/" + Fore.RESET)
 
 
 
