@@ -35,6 +35,7 @@ while True:
     last_three_folders = folders[-3:]
     path = os.sep.join(last_three_folders).replace('\\', '/')
     prompt = input(f"\n{Fore.GREEN}┌── {'~/.../' if len(folders) > 3 else ''}{path} ──┤\n{Fore.CYAN}└───〉{Fore.RESET}")
+    print("")
 
     if not prompt:
         continue
