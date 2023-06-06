@@ -1,3 +1,0 @@
-OS version = 
-OS type = Classics
-username = classics
