@@ -2,11 +2,18 @@ import os
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 from itertools import chain
+from pathlib import Path
 
 # all errors posible
 
-def argument_error(command):
-    print(f"{Fore.RED}ERROR : {Fore.RESET}{command}{Fore.RED} command require an argument, do [help -{Fore.RESET}{command}{Fore.RED}] for more informations{Fore.RESET}")
+def require_argument(command):
+    print(f"{Fore.RED}ERROR : {Fore.WHITE}{command}{Fore.RED} command require an argument, do [help -{Fore.WHITE}{command}{Fore.RED}] for more informations{Fore.RESET}")
+    
+def not_an_argument(argument):
+    print(f"{Fore.RED}The argument(s) {Fore.WHITE}{argument}{Fore.RED} are not valid argument.{Fore.RESET}")
+    print(f"{Fore.RED}To see all the possible arguments for this command, do {Fore.CYAN}help -[command].{Fore.RESET}")
+
+
 
 
 
@@ -46,46 +53,67 @@ def helps(args):
 def os(args):
     import main
     if len(args) == 0:
-        argument_error("os")
+        require_argument("os")
     elif args[0] == "-v":
         print(Fore.CYAN + "your os version is :" + main.os_version + Fore.RESET)
     elif args[0] == "-doc":
         print(Fore.CYAN + "Official LittleOS documentation : " + Fore.BLUE + "https://github.com/dainci/LittleOS/wiki" + Fore.RESET)
+    else:
+        not_an_argument(args)
+    
 
 # python
 def python(args):
     if len(args) == 0:
-        argument_error("python")
+        require_argument("python")
     elif args[0] == "-doc":
         print(Fore.BLUE + "https://docs.python.org/3/" + Fore.RESET)
+
 
 
 
 # navigation dans le systeme
 
 def ls(args):
-    all_folders = [f for f in os.listdir() if os.path.isdir(os.path.join(f))]
-    all_files = [f for f in os.listdir() if os.path.isfile(os.path.join(f))]
+    all_folders = [element.name for element in Path.cwd().iterdir() if element.is_dir()]
+    all_files= [element.name for element in Path.cwd().iterdir() if element.is_file()]
+
     directory_contents = []
     directory_contents.append(all_folders); directory_contents.append(all_files)
     directory_contents_flat = list(chain.from_iterable(directory_contents))
     directory_contents_flat.sort()
 
+    def get_date_modified(path):
+        timestamp = os.path.getmtime(path)
+        date_modified = datetime.fromtimestamp(timestamp)
+        return date_modified
+        
+    def get_size(path):
+        if os.path.isfile(path):
+            size = os.path.getsize(path)
+        else:
+            size = "-"
+        return size
+
+
     if len(args) == 0:
             print(f"{Fore.LIGHTCYAN_EX}{directory_contents_flat}{Fore.RESET}")
 
-            print(tabulate(directory_contents_flat))
+            tableau = []
+            for path in directory_contents_flat:
+                date_modified = get_date_modified(path) #je sais pas quoi metre dans get_modified()
+                size = get_size(path)
+                name = os.path.basename(path)
+                tableau.append([date_modified, size, name])
 
-            
+            # Affichage du tableau
+            headers = ["Date", "Poids", "Nom"]
+            print(tabulate(tableau, headers=headers))
+
 
     elif args[0] == "-fi" or "-file":
-        files = [f for f in os.listdir() if os.path.isfile(os.path.join(f))]
-        for file in files:
-            print(Fore.LIGHTBLUE_EX + file + Fore.RESET)
+            print(f"{Fore.LIGHTCYAN_EX}{all_files}{Fore.RESET}")
             
 
     elif args[0] == "-fo" or "-folder":
-        for element in os.listdir(os.path.curdir):
-            chemin = os.path.join(os.path.curdir, element)
-            if os.path.isdir(chemin):
-                print(element)
+        print(f"{Fore.LIGHTCYAN_EX}{all_folders}{Fore.RESET}")

@@ -6,3 +6,4 @@ cmd = {
     'os': commands.os,
     'python': commands.python,
 }
+
