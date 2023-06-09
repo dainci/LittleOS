@@ -1,11 +1,14 @@
-import os
+import os as os
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 from itertools import chain
 from pathlib import Path
+from datetime import datetime
 
-# all errors posible
+# our dependencies 
+import program.api.command_tool as command_tool
 
+# all possible command errors
 def require_argument(command):
     print(f"{Fore.RED}ERROR : {Fore.WHITE}{command}{Fore.RED} command require an argument, do [help -{Fore.WHITE}{command}{Fore.RED}] for more informations{Fore.RESET}")
     
@@ -14,11 +17,7 @@ def not_an_argument(argument):
     print(f"{Fore.RED}To see all the possible arguments for this command, do {Fore.CYAN}help -[command].{Fore.RESET}")
 
 
-
-
-
-# commande help
-
+# the help command
 def helps(args):
     if len(args) == 0:
         print(f"all the basics commands available. for more specific commands type {Fore.CYAN}help -[command]{Fore.RESET}")
@@ -46,10 +45,21 @@ def helps(args):
     elif args[0] == "-ls":
         print(". -fi / -file : shows only files")
         print(". -fo / -folder : shows only folders")
+
+    elif args[0] == "-clear":
+        print("Deletes all previous commands, needs no arguments to run")
+    
     else:
         print(Fore.RED + "the argument you want to use is invalid or misspelled" + Style.RESET_ALL)
 
-# os
+# clear command
+def clear(args):
+    if len(args) == 0:
+        lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), command_tool.littleos())
+    else:
+        not_an_argument(args)
+
+# os commands
 def os(args):
     import main
     if len(args) == 0:
@@ -62,7 +72,7 @@ def os(args):
         not_an_argument(args)
     
 
-# python
+# python commands
 def python(args):
     if len(args) == 0:
         require_argument("python")
@@ -72,8 +82,7 @@ def python(args):
 
 
 
-# navigation dans le systeme
-
+# ls command
 def ls(args):
     all_folders = [element.name for element in Path.cwd().iterdir() if element.is_dir()]
     all_files= [element.name for element in Path.cwd().iterdir() if element.is_file()]
@@ -83,10 +92,8 @@ def ls(args):
     directory_contents_flat = list(chain.from_iterable(directory_contents))
     directory_contents_flat.sort()
 
-    def get_date_modified(path):
-        timestamp = os.path.getmtime(path)
-        date_modified = datetime.fromtimestamp(timestamp)
-        return date_modified
+#    timestamp = 
+    date_modified = datetime.fromtimestamp(timestamp)
         
     def get_size(path):
         if os.path.isfile(path):
@@ -100,8 +107,7 @@ def ls(args):
             print(f"{Fore.LIGHTCYAN_EX}{directory_contents_flat}{Fore.RESET}")
 
             tableau = []
-            for path in directory_contents_flat:
-                date_modified = get_date_modified(path) #je sais pas quoi metre dans get_modified()
+            for path in directory_contents_flat: #je sais pas quoi metre dans get_modified()
                 size = get_size(path)
                 name = os.path.basename(path)
                 tableau.append([date_modified, size, name])

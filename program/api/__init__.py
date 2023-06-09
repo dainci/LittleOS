@@ -1,2 +1,2 @@
-import program.commands.commands
-import program.commands.command_list
+from program.commands  import commands
+from program.commands  import command_list

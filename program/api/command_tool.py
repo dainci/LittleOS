@@ -7,7 +7,7 @@ import shlex
 import subprocess
 import time
 import os
-
+import sys
 
 
 def littleos():
@@ -59,3 +59,4 @@ while True:
 
     except subprocess.CalledProcessError as e:
         print(f"{Fore.RED}Erreur :{str(e)}")
+        sys.exit(0)

@@ -1,29 +1,24 @@
 import subprocess
-import sys
-import os
+from program.api import command_tool
 
-requirements_file = os.path.join(os.path.dirname(__file__), "requirements.txt")
-
-if not os.path.isfile(requirements_file):
-    print("ERROR: requirements.txt file not found.")
-    sys.exit(1)
-
-with open(requirements_file, 'r') as file:
-    required_modules = [line.strip() for line in file]
-
-missing_modules = []
-for module in required_modules:
+def install_module(module_name):
     try:
-        __import__(module)
-    except ImportError:
-        missing_modules.append(module)
+        subprocess.check_call(["pip", "install", module_name])
+        print(f"the {module_name} module has been correctly installed or updated.")
+    except subprocess.CalledProcessError:
+        print(f"Error : failed to install {module_name}.")
 
-if missing_modules:
-    print("Installation des modules requis...")
-    for module in missing_modules:
-        subprocess.run([sys.executable, '-m', 'pip', 'install', module], check=True)
+# Liste des modules à installer
+modules_to_install = [
+    'colorama',
+    'time',
+    'shlex',
+    'tabulate',
+    'tqdm',
+    'shlex',
+]
 
-from colorama import Fore
-
-print(Fore.GREEN + "All modules are up to date" + Fore.RESET)
-input("Press Enter to continue...")
+# Installation des modules un par un
+for module in modules_to_install:
+    install_module(module)
+    lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), command_tool.littleos())

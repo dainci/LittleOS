@@ -4,6 +4,6 @@
 logs/
 
 # ignored
-__pycache__/
+/__pycache__
 todo.md
 .idea/
