@@ -1,5 +1,6 @@
-import os as os
-from tabulate import tabulate
+
+import os
+from prettytable import PrettyTable
 from colorama import Fore, Back, Style
 from itertools import chain
 from pathlib import Path
@@ -60,7 +61,7 @@ def clear(args):
         not_an_argument(args)
 
 # os commands
-def os(args):
+def ose(args):#changer le nom de la fonction (cela crée une dispute avec le module "os")
     import main
     if len(args) == 0:
         require_argument("os")
@@ -93,7 +94,7 @@ def ls(args):
     directory_contents_flat.sort()
 
 #    timestamp = 
-    date_modified = datetime.fromtimestamp(timestamp)
+#    date_modified = datetime.fromtimestamp(timestamp)
         
     def get_size(path):
         if os.path.isfile(path):
@@ -110,7 +111,7 @@ def ls(args):
             for path in directory_contents_flat: #je sais pas quoi metre dans get_modified()
                 size = get_size(path)
                 name = os.path.basename(path)
-                tableau.append([date_modified, size, name])
+#                tableau.append([date_modified, size, name])
 
             # Affichage du tableau
             headers = ["Date", "Poids", "Nom"]

@@ -4,3 +4,4 @@ shlex
 tabulate
 tqdm
 shlex
+PrettyTable

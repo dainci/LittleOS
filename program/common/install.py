@@ -1,4 +1,6 @@
 import subprocess
+import os
+
 from program.api import command_tool
 
 def install_module(module_name):
@@ -16,6 +18,7 @@ modules_to_install = [
     'tabulate',
     'tqdm',
     'shlex',
+    'PrettyTable',
 ]
 
 # Installation des modules un par un

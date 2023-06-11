@@ -1,5 +1,5 @@
 #import exeptions
-from program.commands import commands
+from ..commands.commands import *
 from program.commands import command_list
 
 from colorama import Fore, Back, Style
