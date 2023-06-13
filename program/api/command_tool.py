@@ -1,6 +1,7 @@
 #import exeptions
-from ..commands.commands import *
+from program.commands.commands import *
 from program.commands import command_list
+from program.env import variables
 
 from colorama import Fore, Back, Style
 import shlex
@@ -30,7 +31,11 @@ time.sleep(0.5)
 while True:
     current_file = os.path.dirname(os.path.abspath(__file__))
     parent_directory = os.path.dirname(current_file)
+    """
+    Faire une variable qui prend le nom du dossier nommé "home" pour les intimes 
+    """
     os.chdir(parent_directory)
+    print(parent_directory)
     folders = parent_directory.split(os.sep)
     last_three_folders = folders[-3:]
     path = os.sep.join(last_three_folders).replace('\\', '/')

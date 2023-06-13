@@ -9,6 +9,7 @@ from datetime import datetime
 # our dependencies 
 import program.api.command_tool as command_tool
 
+
 # all possible command errors
 def require_argument(command):
     print(f"{Fore.RED}ERROR : {Fore.WHITE}{command}{Fore.RED} command require an argument, do [help -{Fore.WHITE}{command}{Fore.RED}] for more informations{Fore.RESET}")
@@ -60,8 +61,8 @@ def clear(args):
     else:
         not_an_argument(args)
 
-# os commands
-def ose(args):#changer le nom de la fonction (cela crée une dispute avec le module "os")
+# LittleOS commands
+def little_os(args):
     import main
     if len(args) == 0:
         require_argument("os")
@@ -87,7 +88,6 @@ def python(args):
 def ls(args):
     all_folders = [element.name for element in Path.cwd().iterdir() if element.is_dir()]
     all_files= [element.name for element in Path.cwd().iterdir() if element.is_file()]
-
     directory_contents = []
     directory_contents.append(all_folders); directory_contents.append(all_files)
     directory_contents_flat = list(chain.from_iterable(directory_contents))
@@ -114,8 +114,7 @@ def ls(args):
 #                tableau.append([date_modified, size, name])
 
             # Affichage du tableau
-            headers = ["Date", "Poids", "Nom"]
-            print(tabulate(tableau, headers=headers))
+            PrettyTable().headers = ["Date", "Poids", "Nom"]
 
 
     elif args[0] == "-fi" or "-file":

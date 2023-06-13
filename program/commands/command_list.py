@@ -4,7 +4,7 @@ import os
 cmd = {
     'help': commands.helps,
     'ls': commands.ls,
-    'os': commands.os,
+    'littleos': commands.little_os,
     'python': commands.python,
     'clear': commands.clear,
 }
