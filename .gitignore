@@ -4,6 +4,7 @@
 logs/
 
 # ignored
+*cpython-310.pyc
 *.pyc
 todo.md
 .idea/

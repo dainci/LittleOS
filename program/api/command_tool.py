@@ -1,5 +1,5 @@
 #import exeptions
-from program.commands.commands import *
+from program.commands import commands
 from program.commands import command_list
 from program.env import variables
 
@@ -23,7 +23,7 @@ def littleos():
     print("                                                          Classic            ")
     print(Style.RESET_ALL)
     print("this is a beta !")
-littleos()
+commands.clear(())
 
 time.sleep(0.5)
 
