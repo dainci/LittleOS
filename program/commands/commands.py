@@ -1,5 +1,6 @@
 
 import os
+import pathlib
 from datetime import datetime
 from pathlib import Path
 from typing import Tuple
@@ -129,3 +130,19 @@ def ls(args):
             headers=("Date", "Poids", "Nom")
         )
     )
+
+
+def cd_command(args):
+    if len(args) == 0:
+        target_path = pathlib.Path.cwd() / "program" / "home"
+    else:
+        target_path = (pathlib.Path.cwd() / args[0])
+
+    try:
+        os.chdir(target_path.absolute())
+    except FileNotFoundError:
+        print(f"cd: no such file or directory:", target_path.name)
+    except NotADirectoryError:
+        print("cd: not a directory:", target_path.name)
+    except Exception as e:
+        print("cd: error", e.__cause__)
