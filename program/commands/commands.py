@@ -1,4 +1,6 @@
 import os
+from datetime import datetime
+
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 from itertools import chain
@@ -50,7 +52,7 @@ def helps(args):
         print(Fore.RED + "the argument you want to use is invalid or misspelled" + Style.RESET_ALL)
 
 # os
-def os(args):
+def os_command(args):
     import main
     if len(args) == 0:
         require_argument("os")
