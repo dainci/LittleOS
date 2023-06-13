@@ -3,6 +3,8 @@ from program.commands.commands import *
 from program.commands import command_list
 from program.env import variables
 
+from pathlib import Path
+
 from colorama import Fore, Back, Style
 import shlex
 import subprocess
