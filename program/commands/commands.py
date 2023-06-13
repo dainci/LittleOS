@@ -1,12 +1,13 @@
 
 import os
-from prettytable import PrettyTable
-from colorama import Fore, Back, Style
-from itertools import chain
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+from typing import Tuple
 
-# our dependencies 
+from colorama import Fore, Style
+from tabulate import tabulate
+
+# our dependencies
 import program.api.command_tool as command_tool
 
 
@@ -50,7 +51,7 @@ def helps(args):
 
     elif args[0] == "-clear":
         print("Deletes all previous commands, needs no arguments to run")
-    
+
     else:
         print(Fore.RED + "the argument you want to use is invalid or misspelled" + Style.RESET_ALL)
 
@@ -75,7 +76,7 @@ def little_os(args):
         not_an_argument(args)
     
 
-# python commands
+# python
 def python(args):
     if len(args) == 0:
         require_argument("python")
@@ -83,44 +84,48 @@ def python(args):
         print(Fore.BLUE + "https://docs.python.org/3/" + Fore.RESET)
 
 
-
-
-# ls command
 def ls(args):
-    all_folders = [element.name for element in Path.cwd().iterdir() if element.is_dir()]
-    all_files= [element.name for element in Path.cwd().iterdir() if element.is_file()]
-    directory_contents = []
-    directory_contents.append(all_folders); directory_contents.append(all_files)
-    directory_contents_flat = list(chain.from_iterable(directory_contents))
-    directory_contents_flat.sort()
+    """Navigation dans le système."""
+    content = {'file': [], 'dir': []}
 
-#    timestamp = 
-#    date_modified = datetime.fromtimestamp(timestamp)
-        
-    def get_size(path):
-        if os.path.isfile(path):
-            size = os.path.getsize(path)
-        else:
-            size = "-"
-        return size
+    for entry in Path.cwd().iterdir():
+        if entry.is_dir():
+            content['dir'].append(entry.name)
+        elif entry.is_file():
+            content['file'].append(entry.name)
+
+    def find_arguments(keys: Tuple[str, ...]) -> bool:
+        return any(arg_key in args for arg_key in keys)
+
+    is_file_only = find_arguments(("-fi", "-file"))
+    is_folder_only = find_arguments(("-fo", "-folder"))
+
+    if is_file_only and is_folder_only:
+        print("Illegal combinaison, cannot display file only if folder only is enabled")
+        return
+
+    if is_file_only:
+        directory_contents = content['file']
+    elif is_folder_only:
+        directory_contents = content['dir']
+    else:
+        directory_contents = content['dir'] + content['file']
+
+    def path_info(path: str) -> Tuple[str, str, str]:
+        timestamp = os.path.getmtime(path)
+        return (
+            str(datetime.fromtimestamp(timestamp)),
+            f"{Fore.YELLOW}{os.path.getsize(path)}{Fore.RESET}",
+            f"{Fore.CYAN}{os.path.basename(path)}{Fore.RESET}"
+        )
 
 
-    if len(args) == 0:
-            print(f"{Fore.LIGHTCYAN_EX}{directory_contents_flat}{Fore.RESET}")
-
-            tableau = []
-            for path in directory_contents_flat: #je sais pas quoi metre dans get_modified()
-                size = get_size(path)
-                name = os.path.basename(path)
-#                tableau.append([date_modified, size, name])
-
-            # Affichage du tableau
-            PrettyTable().headers = ["Date", "Poids", "Nom"]
-
-
-    elif args[0] == "-fi" or "-file":
-            print(f"{Fore.LIGHTCYAN_EX}{all_files}{Fore.RESET}")
-            
-
-    elif args[0] == "-fo" or "-folder":
-        print(f"{Fore.LIGHTCYAN_EX}{all_folders}{Fore.RESET}")
+    print(
+        tabulate(
+            [
+                path_info(path)
+                for path in directory_contents
+            ],
+            headers=("Date", "Poids", "Nom")
+        )
+    )

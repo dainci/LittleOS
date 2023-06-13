@@ -35,7 +35,6 @@ while True:
     Faire une variable qui prend le nom du dossier nommé "home" pour les intimes 
     """
     os.chdir(parent_directory)
-    print(parent_directory)
     folders = parent_directory.split(os.sep)
     last_three_folders = folders[-3:]
     path = os.sep.join(last_three_folders).replace('\\', '/')
