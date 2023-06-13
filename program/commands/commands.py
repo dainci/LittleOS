@@ -139,5 +139,11 @@ def cd_command(args):
     else:
         target_path = (pathlib.Path.cwd() / args[0])
 
-    print('->', target_path.absolute())
-    os.chdir(target_path.absolute())
+    try:
+        os.chdir(target_path.absolute())
+    except FileNotFoundError:
+        print(f"cd: no such file or directory:", target_path.name)
+    except NotADirectoryError:
+        print("cd: not a directory:", target_path.name)
+    except Exception as e:
+        print("cd: error", e.__cause__)
