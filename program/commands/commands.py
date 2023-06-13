@@ -57,7 +57,8 @@ def helps(args):
 # clear command
 def clear(args):
     if len(args) == 0:
-        lambda args: (os.system('cls' if os.name == 'nt' else 'clear'), command_tool.littleos())
+        os.system('cls' if os.name == 'nt' else 'clear')
+        command_tool.littleos()
     else:
         not_an_argument(args)
 
