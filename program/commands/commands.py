@@ -1,5 +1,6 @@
 
 import os
+import pathlib
 from datetime import datetime
 from pathlib import Path
 from typing import Tuple
@@ -129,3 +130,14 @@ def ls(args):
             headers=("Date", "Poids", "Nom")
         )
     )
+
+
+def cd_command(args):
+    if len(args) == 0:
+        target_path = pathlib.Path.home()
+
+    else:
+        target_path = (pathlib.Path.cwd() / args[0])
+
+    print('->', target_path.absolute())
+    os.chdir(target_path.absolute())
