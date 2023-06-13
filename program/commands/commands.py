@@ -119,7 +119,7 @@ def ls(args):
             f"{Fore.CYAN}{os.path.basename(path)}{Fore.RESET}"
         )
 
-    print(f"{Fore.LIGHTCYAN_EX}{directory_contents}{Fore.RESET}")
+
     print(
         tabulate(
             [
