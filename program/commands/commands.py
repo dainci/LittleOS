@@ -10,6 +10,7 @@ from tabulate import tabulate
 
 # our dependencies
 import program.api.command_tool as command_tool
+from program.env.variables import HOME_PATH
 
 
 # all possible command errors
@@ -134,7 +135,7 @@ def ls(args):
 
 def cd_command(args):
     if len(args) == 0:
-        target_path = pathlib.Path.cwd() / "program" / "home"
+        target_path = HOME_PATH
     else:
         target_path = (pathlib.Path.cwd() / args[0])
 
