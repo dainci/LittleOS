@@ -3,6 +3,8 @@ from program.commands import commands
 from program.commands import command_list
 from program.env import variables
 
+from pathlib import Path
+
 from colorama import Fore, Back, Style
 import shlex
 import subprocess
@@ -29,13 +31,12 @@ time.sleep(0.5)
 
 
 while True:
-    current_file = os.path.dirname(os.path.abspath(__file__))
-    parent_directory = os.path.dirname(current_file)
     """
     Faire une variable qui prend le nom du dossier nommé "home" pour les intimes 
     """
-    os.chdir(parent_directory)
+    parent_directory = str(Path.cwd())
     folders = parent_directory.split(os.sep)
+
     last_three_folders = folders[-3:]
     path = os.sep.join(last_three_folders).replace('\\', '/')
     prompt = input(f"\n{Fore.GREEN}┌── {'~/.../' if len(folders) > 3 else ''}{path} ──┤\n{Fore.CYAN}└───〉{Fore.RESET}")
