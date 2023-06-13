@@ -134,8 +134,7 @@ def ls(args):
 
 def cd_command(args):
     if len(args) == 0:
-        target_path = pathlib.Path.home()
-
+        target_path = pathlib.Path.cwd() / "program" / "home"
     else:
         target_path = (pathlib.Path.cwd() / args[0])
 
