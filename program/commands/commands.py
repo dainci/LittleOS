@@ -1,4 +1,3 @@
-
 import os
 import pathlib
 from datetime import datetime
@@ -15,17 +14,26 @@ from program.env.variables import HOME_PATH
 
 # all possible command errors
 def require_argument(command):
-    print(f"{Fore.RED}ERROR : {Fore.WHITE}{command}{Fore.RED} command require an argument, do [help -{Fore.WHITE}{command}{Fore.RED}] for more informations{Fore.RESET}")
-    
+    print(
+        f"{Fore.RED}ERROR : {Fore.WHITE}{command}{Fore.RED} command require an argument, do [help -{Fore.WHITE}{command}{Fore.RED}] for more informations{Fore.RESET}"
+    )
+
+
 def not_an_argument(argument):
-    print(f"{Fore.RED}The argument(s) {Fore.WHITE}{argument}{Fore.RED} are not valid argument.{Fore.RESET}")
-    print(f"{Fore.RED}To see all the possible arguments for this command, do {Fore.CYAN}help -[command].{Fore.RESET}")
+    print(
+        f"{Fore.RED}The argument(s) {Fore.WHITE}{argument}{Fore.RED} are not valid argument.{Fore.RESET}"
+    )
+    print(
+        f"{Fore.RED}To see all the possible arguments for this command, do {Fore.CYAN}help -[command].{Fore.RESET}"
+    )
 
 
 # the help command
 def helps(args):
     if len(args) == 0:
-        print(f"all the basics commands available. for more specific commands type {Fore.CYAN}help -[command]{Fore.RESET}")
+        print(
+            f"all the basics commands available. for more specific commands type {Fore.CYAN}help -[command]{Fore.RESET}"
+        )
         print("------------------------------------------------")
         print("help : all commands")
         print("exit : exit program")
@@ -46,7 +54,7 @@ def helps(args):
 
     elif args[0] == "-python":
         print(". -doc : show the official documentation of python")
-        
+
     elif args[0] == "-ls":
         print(". -fi / -file : shows only files")
         print(". -fo / -folder : shows only folders")
@@ -55,28 +63,41 @@ def helps(args):
         print("Deletes all previous commands, needs no arguments to run")
 
     else:
-        print(Fore.RED + "the argument you want to use is invalid or misspelled" + Style.RESET_ALL)
+        print(
+            Fore.RED
+            + "the argument you want to use is invalid or misspelled"
+            + Style.RESET_ALL
+        )
+
 
 # clear command
 def clear(args):
     if len(args) == 0:
-        os.system('cls' if os.name == 'nt' else 'clear')
+        os.system("cls" if os.name == "nt" else "clear")
         command_tool.littleos()
     else:
         not_an_argument(args)
 
+
 # LittleOS commands
 def little_os(args):
     import main
+
     if len(args) == 0:
         require_argument("os")
     elif args[0] == "-v":
         print(Fore.CYAN + "your os version is :" + main.os_version + Fore.RESET)
     elif args[0] == "-doc":
-        print(Fore.CYAN + "Official LittleOS documentation : " + Fore.BLUE + "https://github.com/dainci/LittleOS/wiki" + Fore.RESET)
+        print(
+            Fore.CYAN
+            + "Official LittleOS documentation : "
+            + Fore.BLUE
+            + "https://github.com/dainci/LittleOS/wiki"
+            + Fore.RESET
+        )
     else:
         not_an_argument(args)
-    
+
 
 # python
 def python(args):
@@ -88,13 +109,13 @@ def python(args):
 
 def ls(args):
     """Navigation dans le système."""
-    content = {'file': [], 'dir': []}
+    content = {"file": [], "dir": []}
 
     for entry in Path.cwd().iterdir():
         if entry.is_dir():
-            content['dir'].append(entry.name)
+            content["dir"].append(entry.name)
         elif entry.is_file():
-            content['file'].append(entry.name)
+            content["file"].append(entry.name)
 
     def find_arguments(keys: Tuple[str, ...]) -> bool:
         return any(arg_key in args for arg_key in keys)
@@ -107,28 +128,24 @@ def ls(args):
         return
 
     if is_file_only:
-        directory_contents = content['file']
+        directory_contents = content["file"]
     elif is_folder_only:
-        directory_contents = content['dir']
+        directory_contents = content["dir"]
     else:
-        directory_contents = content['dir'] + content['file']
+        directory_contents = content["dir"] + content["file"]
 
     def path_info(path: str) -> Tuple[str, str, str]:
         timestamp = os.path.getmtime(path)
         return (
             str(datetime.fromtimestamp(timestamp)),
             f"{Fore.YELLOW}{os.path.getsize(path)}{Fore.RESET}",
-            f"{Fore.CYAN}{os.path.basename(path)}{Fore.RESET}"
+            f"{Fore.CYAN}{os.path.basename(path)}{Fore.RESET}",
         )
-
 
     print(
         tabulate(
-            [
-                path_info(path)
-                for path in directory_contents
-            ],
-            headers=("Date", "Poids", "Nom")
+            [path_info(path) for path in directory_contents],
+            headers=("Date", "Poids", "Nom"),
         )
     )
 
@@ -137,7 +154,7 @@ def cd_command(args):
     if len(args) == 0:
         target_path = HOME_PATH
     else:
-        target_path = (pathlib.Path.cwd() / args[0])
+        target_path = pathlib.Path.cwd() / args[0]
 
     try:
         os.chdir(target_path.absolute())
