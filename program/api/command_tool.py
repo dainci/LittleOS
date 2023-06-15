@@ -5,10 +5,12 @@ import sys
 import time
 from pathlib import Path
 
-from colorama import Fore, Back, Style
-
+from rich.console import Console
 from program.commands import command_list
 from program.commands import commands
+
+
+console = Console()
 
 ASCII_ART = (
     (" " * 11 + "dainci's").ljust(77)
@@ -25,14 +27,11 @@ ASCII_ART = (
 
 
 def littleos():
-    print(Back.CYAN + Fore.BLACK)
-    print(ASCII_ART)
-    print(Style.RESET_ALL)
-    print("this is a beta !")
+    console.print(f"[black on cyan]{ASCII_ART}[/]")
+    console.print("[i]this is a beta ![/i]")
 
 
 commands.clear(())
-
 time.sleep(0.5)
 
 
@@ -47,8 +46,9 @@ while True:
     path = os.sep.join(last_three_folders).replace("\\", "/")
 
     prompt_header = "~/.../" if len(folders) > 3 else ""
-    prompt = input(
-        f"\n{Fore.GREEN}┌── {prompt_header}{path} ──┤" f"\n{Fore.CYAN}└───〉{Fore.RESET}"
+    prompt = console.input(
+        f"\n[green]┌── {prompt_header}{path} ──┤"
+        f"\n[cyan]└───〉[/]"
     )
     print("")
 
@@ -61,7 +61,7 @@ while True:
 
     # command args
     if prompt.lower() == "exit":
-        print("ended by user")
+        console.print("[red]ended by user[/]")
         time.sleep(0.3)
         break
 
@@ -70,8 +70,8 @@ while True:
             command_list.cmd[command](args)
 
         else:
-            print(f"{Fore.RED}command not recognized{Fore.RESET}")
+            console.print(f"[red]command not recognized[/]")
 
     except subprocess.CalledProcessError as e:
-        print(f"{Fore.RED}Erreur :{str(e)}")
+        console.print(f"[red]Erreur :{str(e)}[/]")
         sys.exit(0)

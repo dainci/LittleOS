@@ -4,36 +4,43 @@ from datetime import datetime
 from pathlib import Path
 from typing import Tuple
 
-from colorama import Fore, Style
-from tabulate import tabulate
+from rich import box
+from rich.console import Console
+from rich.table import Table
 
 # our dependencies
 import program.api.command_tool as command_tool
-from program.env.variables import HOME_PATH
+from program.env.variables import HOME_PATH, os_version
+
+console = Console()
 
 
 # all possible command errors
 def require_argument(command):
-    print(
-        f"{Fore.RED}ERROR : {Fore.WHITE}{command}{Fore.RED} command require an argument, do [help -{Fore.WHITE}{command}{Fore.RED}] for more informations{Fore.RESET}"
+    console.print(
+        f"[red]ERROR : [/]{command}"
+        f"[red] command require an argument,"
+        f" do [help -[/]{command}[red]] for more informations[/]"
     )
 
 
 def not_an_argument(argument):
-    print(
-        f"{Fore.RED}The argument(s) {Fore.WHITE}{argument}{Fore.RED} are not valid argument.{Fore.RESET}"
-    )
-    print(
-        f"{Fore.RED}To see all the possible arguments for this command, do {Fore.CYAN}help -[command].{Fore.RESET}"
+    console.print(f"[red]The argument(s) [/]{argument}[red] are not valid argument.[/]")
+    console.print(
+        "[red]To see all the possible arguments for this command,"
+        " do [cyan]help -[command].[/]"
     )
 
 
 # the help command
 def helps(args):
     if len(args) == 0:
-        print(
-            f"all the basics commands available. for more specific commands type {Fore.CYAN}help -[command]{Fore.RESET}"
+        console.print(
+            f"all the basics commands available."
+            f" for more specific commands type"
+            f" [cyan]help -[command][/]"
         )
+
         print("------------------------------------------------")
         print("help : all commands")
         print("exit : exit program")
@@ -63,10 +70,8 @@ def helps(args):
         print("Deletes all previous commands, needs no arguments to run")
 
     else:
-        print(
-            Fore.RED
-            + "the argument you want to use is invalid or misspelled"
-            + Style.RESET_ALL
+        console.print(
+            "[red]the argument you want to use is invalid or misspelled[/]"
         )
 
 
@@ -81,19 +86,14 @@ def clear(args):
 
 # LittleOS commands
 def little_os(args):
-    import main
-
     if len(args) == 0:
         require_argument("os")
     elif args[0] == "-v":
-        print(Fore.CYAN + "your os version is :" + main.os_version + Fore.RESET)
+        console.print(f"[cyan]your os version is :{os_version}[/]")
     elif args[0] == "-doc":
-        print(
-            Fore.CYAN
-            + "Official LittleOS documentation : "
-            + Fore.BLUE
-            + "https://github.com/dainci/LittleOS/wiki"
-            + Fore.RESET
+        console.print(
+            "[cyan]Official LittleOS documentation:"
+            " [blue]https://github.com/dainci/LittleOS/wiki[/]"
         )
     else:
         not_an_argument(args)
@@ -104,7 +104,7 @@ def python(args):
     if len(args) == 0:
         require_argument("python")
     elif args[0] == "-doc":
-        print(Fore.BLUE + "https://docs.python.org/3/" + Fore.RESET)
+        console.print("[blue]https://docs.python.org/3/[/]")
 
 
 def ls(args):
@@ -134,20 +134,24 @@ def ls(args):
     else:
         directory_contents = content["dir"] + content["file"]
 
-    def path_info(path: str) -> Tuple[str, str, str]:
-        timestamp = os.path.getmtime(path)
+    def path_info(filepath: str) -> Tuple[str, str, str]:
+        timestamp = os.path.getmtime(filepath)
         return (
             str(datetime.fromtimestamp(timestamp)),
-            f"{Fore.YELLOW}{os.path.getsize(path)}{Fore.RESET}",
-            f"{Fore.CYAN}{os.path.basename(path)}{Fore.RESET}",
+            f"[yellow]{os.path.getsize(filepath)}[/]",
+            f"[cyan]{os.path.basename(filepath)}[/]"
         )
 
-    print(
-        tabulate(
-            [path_info(path) for path in directory_contents],
-            headers=("Date", "Poids", "Nom"),
-        )
-    )
+    table = Table(show_header=True, header_style="bold", box=box.SIMPLE_HEAD)
+
+    table.add_column("Date")
+    table.add_column("Poids", justify="right")
+    table.add_column("Nom")
+
+    for path in directory_contents:
+        table.add_row(*path_info(path))
+
+    console.print(table)
 
 
 def cd_command(args):
