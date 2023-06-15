@@ -168,3 +168,50 @@ def cd_command(args):
         print("cd: not a directory:", target_path.name)
     except Exception as e:
         print("cd: error", e.__cause__)
+
+
+def mkfile(args):
+    if len(args) == 0:
+        print("mkfile takes one given argument but 0 were given")
+    elif len(args) > 1:
+        print(f"mkfile takes one given argument but {len(command_tool.args)} were given")
+    else:
+        try:
+            with open(str(args).replace("[", "").replace("]", "").replace("'", ""), 'w') as f:
+                f.write('')
+            print(f"Le fichier {args} a été créé avec succès.")
+        except FileExistsError:
+            print(f"Le fichier {args} existe déjà.")
+        except Exception as e:
+            print(f"Erreur lors de la création du fichier {args}: {str(e)}")
+
+
+def rmdir(args):
+    if len(args) == 0:
+        print("mkdir takes one given argument but 0 were given")
+    elif len(args) > 1:
+        print(f"mkdir takes one given argument but {len(command_tool.args)} were given")
+    else:
+        try:
+            os.rmdir(str(args).replace("[", "").replace("]", "").replace("'", ""))
+            print(f"Le dossier {args} a été supprimé avec succès.")
+        except FileNotFoundError:
+            print(f"Le dossier {args} n'existe pas.")
+        except OSError as e:
+            print(f"Erreur lors de la suppression du dossier {args}: {str(e)}")
+
+def rmfile(args):
+    if len(args) == 0:
+        print("mkdir takes one given argument but 0 were given")
+    elif len(args) > 1:
+        print(f"mkdir takes one given argument but {len(command_tool.args)} were given")
+    else:
+        try:
+            os.remove(str(args).replace("[", "").replace("]", "").replace("'", ""))
+            print(f"Le fichier {args} a été supprimé avec succès.")
+        except FileNotFoundError:
+            print(f"Le fichier {args} n'existe pas.")
+        except OSError as e:
+            print(f"Erreur lors de la suppression du fichier {args}: {str(e)}")
+
+

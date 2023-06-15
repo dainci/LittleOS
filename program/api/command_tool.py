@@ -8,7 +8,7 @@ from pathlib import Path
 from rich.console import Console
 from program.commands import command_list
 from program.commands import commands
-
+from program.env.variables import HOME_PATH
 
 console = Console()
 
@@ -34,6 +34,7 @@ def littleos():
 commands.clear(())
 time.sleep(0.5)
 
+os.chdir(HOME_PATH)
 
 while True:
     """
