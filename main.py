@@ -1,3 +1,4 @@
-# import program.common.install
-import program.api.command_tool
-import os
+from little_os import cli
+
+if __name__ == "__main__":
+    cli.run()

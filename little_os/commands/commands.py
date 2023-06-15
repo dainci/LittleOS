@@ -9,8 +9,8 @@ from rich.console import Console
 from rich.table import Table
 
 # our dependencies
-import program.api.command_tool as command_tool
-from program.env.variables import HOME_PATH, os_version
+from ..api import command_tool
+from ..env.variables import HOME_PATH, os_version
 
 console = Console()
 
@@ -70,16 +70,14 @@ def helps(args):
         print("Deletes all previous commands, needs no arguments to run")
 
     else:
-        console.print(
-            "[red]the argument you want to use is invalid or misspelled[/]"
-        )
+        console.print("[red]the argument you want to use is invalid or misspelled[/]")
 
 
 # clear command
 def clear(args):
     if len(args) == 0:
         os.system("cls" if os.name == "nt" else "clear")
-        command_tool.littleos()
+        command_tool.print_title()
     else:
         not_an_argument(args)
 
@@ -139,7 +137,7 @@ def ls(args):
         return (
             str(datetime.fromtimestamp(timestamp)),
             f"[yellow]{os.path.getsize(filepath)}[/]",
-            f"[cyan]{os.path.basename(filepath)}[/]"
+            f"[cyan]{os.path.basename(filepath)}[/]",
         )
 
     table = Table(show_header=True, header_style="bold", box=box.SIMPLE_HEAD)
@@ -174,11 +172,15 @@ def mkfile(args):
     if len(args) == 0:
         print("mkfile takes one given argument but 0 were given")
     elif len(args) > 1:
-        print(f"mkfile takes one given argument but {len(command_tool.args)} were given")
+        print(
+            f"mkfile takes one given argument but {len(command_tool.args)} were given"
+        )
     else:
         try:
-            with open(str(args).replace("[", "").replace("]", "").replace("'", ""), 'w') as f:
-                f.write('')
+            with open(
+                str(args).replace("[", "").replace("]", "").replace("'", ""), "w"
+            ) as f:
+                f.write("")
             print(f"Le fichier {args} a été créé avec succès.")
         except FileExistsError:
             print(f"Le fichier {args} existe déjà.")
@@ -200,6 +202,7 @@ def rmdir(args):
         except OSError as e:
             print(f"Erreur lors de la suppression du dossier {args}: {str(e)}")
 
+
 def rmfile(args):
     if len(args) == 0:
         print("mkdir takes one given argument but 0 were given")
@@ -213,5 +216,3 @@ def rmfile(args):
             print(f"Le fichier {args} n'existe pas.")
         except OSError as e:
             print(f"Erreur lors de la suppression du fichier {args}: {str(e)}")
-
-
