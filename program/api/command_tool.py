@@ -14,7 +14,7 @@ import sys
 
 
 def littleos():
-    print(Back.CYAN + Fore.BLACK + "           dainci                                                            ")
+    print(Back.CYAN + Fore.BLACK + "           dainci's                                                          ")
     print("                                                                             ")
     print("    █████  ██      ██          ████████  ██████   ██████  ██      ███████    ")
     print("   ██   ██ ██      ██             ██    ██    ██ ██    ██ ██      ██         ")
