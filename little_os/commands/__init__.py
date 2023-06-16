@@ -1,6 +1,6 @@
-from program.commands import commands
+from . import commands
 
-cmd = {
+command_list = {
     "help": commands.helps,
     "ls": commands.ls,
     "littleos": commands.little_os,
