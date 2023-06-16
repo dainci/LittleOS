@@ -1,12 +1,12 @@
-from . import commands
+from program.commands import commands
 
-command_list = {
+cmd = {
     "help": commands.helps,
     "ls": commands.ls,
     "littleos": commands.little_os,
     "python": commands.python,
     "clear": commands.clear,
     "cd": commands.cd_command,
-    "mk": commands.make,
-    "rm": commands.remove,
+    "make": commands.make,
+    "remove": commands.remove,
 }
