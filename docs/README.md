@@ -1,5 +1,7 @@
 # LittleOS (or AllTools)
 
+* [How to install](https://github.com/dainci/LittleOS/wiki/How-to-install)
+
 LittleOS is an operating system coded entirely in Python, developed from scratch. Although the project is currently an overlay of the existing OS, the ultimate goal is to be able to run it directly on a blank computer.
 
 <p align="center">
