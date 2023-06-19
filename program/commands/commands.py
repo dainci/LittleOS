@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Tuple
 
-from rich import box
+from rich import box, print
 from rich.console import Console
 from rich.table import Table
 
@@ -174,25 +174,25 @@ def make(args):
     if args[0] == '-dir':
         try:
             os.makedirs(str(args[1]), exist_ok=True)
-            print(f"Le dossier {args[1]} a été créé avec succès.")
+            print(f"The directory [blue]{args[1]}[/] was successfully created.")
         except Exception as e:
-            print(f"Erreur lors de la création du dossier {args[1]}: {str(e)}")
+            print(f"Error when creating the directory {args[1]}: {str(e)}.")
 
     elif args[0] == '-file':
         try:
             with open(str(args[1]), 'w') as f:
                 f.write('')
-            print(f"Le fichier {args[1]} a été créé avec succès.")
+            print(f"The file [blue]{args[1]}[/] was successfully created.")
         except FileExistsError:
-            print(f"Le fichier {args[1]} existe déjà.")
+            print(f"The name [blue]{args[1]}[/] already exist.")
         except Exception as e:
-            print(f"Erreur lors de la création du fichier {args[1]}: {str(e)}")
+            print(f"Error when creating the directory [blue]{args[1]}[/]: {str(e)}.")
 
 
     if len(args) == 0:
         pass #print le help de la commande "make"
     elif len(args) > 2:
-        print(f"make takes one given argument but {len(command_tool.args)} were given")
+        print(f"make takes one given argument but {len(command_tool.args)} were given.")
 
 
 
@@ -200,22 +200,22 @@ def remove(args):
     if args[0] == '-dir':
         try:
             os.rmdir(str(args[1]))
-            print(f"Le dossier {args[1]} a été supprimé avec succès.")
+            print(f"The directory [blue]{args[1]}[/] was successfully removed.")
         except FileNotFoundError:
-            print(f"Le dossier {args[1]} n'existe pas.")
+            print(f"The directory [blue]{args[1]}[/] do not exist.")
         except OSError as e:
-            print(f"Erreur lors de la suppression du dossier {args[1]}: {str(e)}")
+            print(f"Error while deleting directory [blue]{args[1]}[/]: {str(e)}")
 
     elif args[0] == '-file':
         try:
             os.remove(str(args[1]))
-            print(f"Le fichier {args[1]} a été supprimé avec succès.")
+            print(f"The file [blue]{args[1]}[/] was successfully removed.")
         except FileNotFoundError:
-            print(f"Le fichier {args[1]} n'existe pas.")
+            print(f"The file [blue]{args[1]}[/] do not exist.")
         except OSError as e:
-            print(f"Erreur lors de la suppression du fichier {args[1]}: {str(e)}")
+            print(f"Error while deleting file [blue]{args[1]}[/]: {str(e)}")
 
     if len(args) == 0:
-        pass  # print le help de la commande "make"
+        pass  # print le help de la commande "remove"
     elif len(args) > 2:
         print(f"make takes one given argument but {len(command_tool.args)} were given")
