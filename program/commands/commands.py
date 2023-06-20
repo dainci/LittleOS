@@ -50,10 +50,17 @@ def helps(args):
         print("os -[argument] : have information for the OS")
         print("------------------------------------------------")
         print("ls -(argument) : list all files in current directory")
-        # print("cd <directory> : change directory")
-        # print("rm <directory> : remove directory")
-        # print("mkdir <directory> : create a directory")
-        # print("touch <file> : create a file")
+        print("cd <directory> : change directory")
+        print("remove -[argument] <directory> : remove directory")
+        print("make -[argument] <directory> : create a directory")
+
+    elif args[0] == "-remove":
+        print(". -file : delete the file you want")
+        print(". -dir : delete the directory you want")
+
+    elif args[0] == "-remove":
+        print(". -file : removes the file you want")
+        print(". -dir : removes the directory you want")
 
     elif args[0] == "-os":
         print(". -v : show the version of the OS")
@@ -188,12 +195,10 @@ def make(args):
         except Exception as e:
             print(f"Error when creating the directory [blue]{args[1]}[/]: {str(e)}.")
 
-
     if len(args) == 0:
-        pass #print le help de la commande "make"
+        pass  # print le help de la commande "make"
     elif len(args) > 2:
         print(f"make takes one given argument but {len(command_tool.args)} were given.")
-
 
 
 def remove(args):

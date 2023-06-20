@@ -7,7 +7,5 @@ def install_module():
     except subprocess.CalledProcessError:
         print(f"Error : failed to install.")
 
-# Liste des modules à installer
 
-# Installation des modules un par un
 install_module()
