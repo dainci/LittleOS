@@ -1,3 +1,3 @@
-# import program.common.install
-import program.api.command_tool
-import os
+# LittleOS 2023
+
+from program.api import command_tool

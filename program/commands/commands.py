@@ -100,7 +100,7 @@ def little_os(args):
     elif args[0] == "-doc":
         console.print(
             "[cyan]Official LittleOS documentation:"
-            " [blue]https://github.com/dainci/LittleOS/wiki[/]"
+            " [blue]https://github.com/dainci/LittleOS/wiki[/] (ctrl + click)"
         )
     else:
         not_an_argument(args)
