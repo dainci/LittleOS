@@ -90,7 +90,7 @@ def clear(args):
     else:
         not_an_argument(args)
 
-
+        
 # LittleOS commands
 def little_os(args):
     if len(args) == 0:
