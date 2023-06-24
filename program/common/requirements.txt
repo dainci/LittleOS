@@ -1,3 +1,4 @@
 rich
 tabulate
 tqdm
+prompt_toolkit

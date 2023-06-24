@@ -4,6 +4,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from itertools import count as crash
 
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import Completer, PathCompleter, WordCompleter
@@ -82,7 +83,8 @@ while True:
     if prompts.lower() == "exit":
         console.print("[red]ended by user[/]")
         time.sleep(0.3)
-        break
+
+        list(crash(0))
 
 
 
