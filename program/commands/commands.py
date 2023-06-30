@@ -35,34 +35,12 @@ def not_an_argument(argument):
 # the help command
 def helps(args):
     if len(args) == 0:
-        console.print(
-            f"all the basics commands available."
-            f" for more specific commands type"
-            f" [cyan]help -[command][/]"
-        )
-
-        print("------------------------------------------------")
-        print("help : all commands")
-        print("exit : exit program")
-        print("clear : clear screen")
-        print("------------------------------------------------")
-        print("python -[argument] : have information for Python")
-        print("os -[argument] : have information for the OS")
-        print("------------------------------------------------")
-        print("ls -(argument) : list all files in current directory")
-        print("cd <directory> : change directory")
-        print("remove -[argument] <directory> : remove directory")
-        print("make -[argument] <directory> : create a directory")
-
+        all_help()
     elif args[0] == "-remove":
-        print(". -file : delete the file you want")
-        print(". -dir : delete the directory you want")
+        print(". file : delete the file you want")
+        print(". dir : delete the directory you want")
 
-    elif args[0] == "-remove":
-        print(". -file : removes the file you want")
-        print(". -dir : removes the directory you want")
-
-    elif args[0] == "-os":
+    elif args[0] == "-littleos":
         print(". -v : show the version of the OS")
         print(". -doc : show the oficial documentation of the OS")
 
@@ -77,9 +55,26 @@ def helps(args):
         print("Deletes all previous commands, needs no arguments to run")
 
     else:
-        console.print(
-            "[red]the argument you want to use is invalid or misspelled[/]"
-        )
+        console.print("[red]the argument you want to use is invalid or misspelled[/]")
+
+
+def all_help():
+    console.print(
+        'all the basics commands available. for more specific commands type [cyan]help -[command][/]'
+    )
+
+    print("------------------------------------------------ \n"
+          "help : all commands \n"
+          "exit : exit program \n"
+          "clear : clear screen \n"
+          "------------------------------------------------ \n"
+          "python -[argument] : have information for Python \n"
+          "littleos -[argument] : have information for the OS \n"
+          "------------------------------------------------ \n"
+          "ls -(argument) : list all files in current directory \n"
+          "cd <directory> : change directory \n"
+          "remove -[argument] <directory> : remove directory \n"
+          "make -[argument] <directory> : create a directory \n")
 
 
 # clear command
@@ -90,32 +85,39 @@ def clear(args):
     else:
         not_an_argument(args)
 
-        
+
 # LittleOS commands
 def little_os(args):
+    possible_arguments = {
+        "-v": f"[cyan]your os version is: {os_version}[/]",
+        "-doc": "[cyan]Official LittleOS documentation: "
+                "[blue]https://github.com/dainci/LittleOS/wiki[/] (ctrl + click)"
+    }
+
     if len(args) == 0:
-        require_argument("os")
-    elif args[0] == "-v":
-        console.print(f"[cyan]your os version is :{os_version}[/]")
-    elif args[0] == "-doc":
-        console.print(
-            "[cyan]Official LittleOS documentation:"
-            " [blue]https://github.com/dainci/LittleOS/wiki[/] (ctrl + click)"
-        )
+        require_argument("littleos")
+    elif args[0] in possible_arguments:
+        console.print(possible_arguments[args[0]])
     else:
         not_an_argument(args)
 
 
 # python
 def python(args):
+    possible_arguments = {
+        "-doc": "[cyan]Official Python documentation: "
+                "[blue]https://docs.python.org/3/[/] (ctrl + click)"
+    }
+
     if len(args) == 0:
-        require_argument("python")
-    elif args[0] == "-doc":
-        console.print("[blue]https://docs.python.org/3/[/]")
+        require_argument("Python")
+    elif args[0] in possible_arguments:
+        console.print(possible_arguments[args[0]])
+    else:
+        not_an_argument(args)
 
 
 def ls(args):
-    """Navigation dans le système."""
     content = {"file": [], "dir": []}
 
     for entry in Path.cwd().iterdir():
@@ -146,7 +148,7 @@ def ls(args):
         return (
             str(datetime.fromtimestamp(timestamp)),
             f"[yellow]{os.path.getsize(filepath)}[/]",
-            f"[cyan]{os.path.basename(filepath)}[/]"
+            f"[cyan]{os.path.basename(filepath)}[/]",
         )
 
     table = Table(show_header=True, header_style="bold", box=box.SIMPLE_HEAD)
@@ -162,30 +164,29 @@ def ls(args):
 
 
 def cd_command(args):
-    if len(args) == 0:
-        target_path = HOME_PATH
-    else:
-        target_path = pathlib.Path.cwd() / args[0]
-
+    target_path = HOME_PATH if len(args) == 0 else pathlib.Path.cwd() / args[0]
     try:
         os.chdir(target_path.absolute())
     except FileNotFoundError:
-        print(f"cd: no such file or directory:", target_path.name)
+        print("cd: no such file or directory:", target_path.name)
     except NotADirectoryError:
         print("cd: not a directory:", target_path.name)
     except Exception as e:
         print("cd: error", e.__cause__)
 
 
-def make(args):
-    if args[0] == '-dir':
+def make(args): # ERROR : c'est casser !!
+    if not args:
+        require_argument("make")
+
+    elif args[0] == 'dir':
         try:
             os.makedirs(str(args[1]), exist_ok=True)
             print(f"The directory [blue]{args[1]}[/] was successfully created.")
         except Exception as e:
             print(f"Error when creating the directory {args[1]}: {str(e)}.")
 
-    elif args[0] == '-file':
+    elif args[0] == 'file':
         try:
             with open(str(args[1]), 'w') as f:
                 f.write('')
@@ -195,14 +196,15 @@ def make(args):
         except Exception as e:
             print(f"Error when creating the directory [blue]{args[1]}[/]: {str(e)}.")
 
-    if len(args) == 0:
-        pass  # print le help de la commande "make"
     elif len(args) > 2:
         print(f"make takes one given argument but {len(command_tool.args)} were given.")
 
 
 def remove(args):
-    if args[0] == '-dir':
+    if not args:
+        require_argument("remove")
+
+    elif args[0] == "-dir":
         try:
             os.rmdir(str(args[1]))
             print(f"The directory [blue]{args[1]}[/] was successfully removed.")
@@ -211,7 +213,7 @@ def remove(args):
         except OSError as e:
             print(f"Error while deleting directory [blue]{args[1]}[/]: {str(e)}")
 
-    elif args[0] == '-file':
+    elif args[0] == "-file":
         try:
             os.remove(str(args[1]))
             print(f"The file [blue]{args[1]}[/] was successfully removed.")
@@ -220,7 +222,5 @@ def remove(args):
         except OSError as e:
             print(f"Error while deleting file [blue]{args[1]}[/]: {str(e)}")
 
-    if len(args) == 0:
-        pass  # print le help de la commande "remove"
     elif len(args) > 2:
         print(f"make takes one given argument but {len(command_tool.args)} were given")

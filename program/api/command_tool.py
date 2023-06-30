@@ -37,9 +37,6 @@ time.sleep(0.5)
 os.chdir(HOME_PATH)
 
 while True:
-    """
-    Faire une variable qui prend le nom du dossier nommé "home" pour les intimes
-    """
     parent_directory = str(Path.cwd())
     folders = parent_directory.split(os.sep)
 
@@ -48,17 +45,15 @@ while True:
 
     prompt_header = "~/.../" if len(folders) > 3 else ""
     prompt = console.input(
-        f"\n[green]┌── {prompt_header}{path} ──┤"
-        f"\n[cyan]└───〉[/]"
+        f"\n[green]┌── {prompt_header}{path} ──┤" f"\n[cyan]└───〉[/]"
     )
     print("")
 
     if not prompt:
         continue
-    else:
-        parts = shlex.split(prompt)
-        command = parts[0]
-        args = parts[1:]
+    parts = shlex.split(prompt)
+    command = parts[0]
+    args = parts[1:]
 
     # command args
     if prompt.lower() == "exit":
@@ -71,7 +66,7 @@ while True:
             command_list.cmd[command](args)
 
         else:
-            console.print(f"[red]command not recognized[/]")
+            console.print("[red]command not recognized[/]")
 
     except subprocess.CalledProcessError as e:
         console.print(f"[red]Erreur :{str(e)}[/]")

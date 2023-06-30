@@ -7,6 +7,6 @@ cmd = {
     "python": commands.python,
     "clear": commands.clear,
     "cd": commands.cd_command,
-    "make": commands.make,
-    "remove": commands.remove,
+    "mk": commands.make,
+    "rm": commands.remove,
 }
