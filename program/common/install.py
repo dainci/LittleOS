@@ -25,5 +25,5 @@ if missing_modules:
 
 from colorama import Fore
 
-print(Fore.GREEN + "All modules are up to date" + Fore.RESET)
+print(f"{Fore.GREEN}All modules are up to date{Fore.RESET}")
 input("Press Enter to continue...")

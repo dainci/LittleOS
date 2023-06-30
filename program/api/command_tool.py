@@ -39,10 +39,9 @@ while True:
 
     if not prompt:
         continue
-    else:
-        parts = shlex.split(prompt)
-        command = parts[0]
-        args = parts[1:]
+    parts = shlex.split(prompt)
+    command = parts[0]
+    args = parts[1:]
 
 #    command args args
     if prompt.lower() == "exit":
@@ -53,7 +52,7 @@ while True:
     try:
         if command in command_list.cmd:
             command_list.cmd[command](args)
-        
+
         else:
             print(f"{Fore.RED}command not recognized{Fore.RESET}")
 

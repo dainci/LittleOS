@@ -44,12 +44,14 @@ def helps(args):
 
     elif args[0] == "-python":
         print(". -doc : show the official documentation of python")
-        
+
     elif args[0] == "-ls":
         print(". -fi / -file : shows only files")
         print(". -fo / -folder : shows only folders")
     else:
-        print(Fore.RED + "the argument you want to use is invalid or misspelled" + Style.RESET_ALL)
+        print(
+            f"{Fore.RED}the argument you want to use is invalid or misspelled{Style.RESET_ALL}"
+        )
 
 # os
 def os_command(args):
@@ -57,9 +59,11 @@ def os_command(args):
     if len(args) == 0:
         require_argument("os")
     elif args[0] == "-v":
-        print(Fore.CYAN + "your os version is :" + main.os_version + Fore.RESET)
+        print(f"{Fore.CYAN}your os version is :{main.os_version}{Fore.RESET}")
     elif args[0] == "-doc":
-        print(Fore.CYAN + "Official LittleOS documentation : " + Fore.BLUE + "https://github.com/dainci/LittleOS/wiki" + Fore.RESET)
+        print(
+            f"{Fore.CYAN}Official LittleOS documentation : {Fore.BLUE}https://github.com/dainci/LittleOS/wiki{Fore.RESET}"
+        )
     else:
         not_an_argument(args)
     
@@ -69,7 +73,7 @@ def python(args):
     if len(args) == 0:
         require_argument("python")
     elif args[0] == "-doc":
-        print(Fore.BLUE + "https://docs.python.org/3/" + Fore.RESET)
+        print(f"{Fore.BLUE}https://docs.python.org/3/{Fore.RESET}")
 
 
 
@@ -81,21 +85,18 @@ def ls(args):
     all_files= [element.name for element in Path.cwd().iterdir() if element.is_file()]
 
     directory_contents = []
-    directory_contents.append(all_folders); directory_contents.append(all_files)
-    directory_contents_flat = list(chain.from_iterable(directory_contents))
-    directory_contents_flat.sort()
-
+    directory_contents.append(all_folders)
+    directory_contents.append(all_files)
+    directory_contents_flat = sorted(chain.from_iterable(directory_contents))
     def get_date_modified(path):
         timestamp = os.path.getmtime(path)
         date_modified = datetime.fromtimestamp(timestamp)
         return date_modified
-        
+
     def get_size(path):
-        if os.path.isfile(path):
-            size = os.path.getsize(path)
-        else:
-            size = "-"
+        size = os.path.getsize(path) if os.path.isfile(path) else "-"
         return size
+
 
 
     if len(args) == 0:
@@ -115,7 +116,7 @@ def ls(args):
 
     elif args[0] == "-fi" or "-file":
             print(f"{Fore.LIGHTCYAN_EX}{all_files}{Fore.RESET}")
-            
+
 
     elif args[0] == "-fo" or "-folder":
         print(f"{Fore.LIGHTCYAN_EX}{all_folders}{Fore.RESET}")
