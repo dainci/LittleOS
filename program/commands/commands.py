@@ -182,8 +182,9 @@ def grep(args):
             try:
                 with open(file_path, 'r') as file:
                     lines = file.readlines()
-                    matching_lines = [line for line in lines if keyword in line]
-                    if matching_lines:
+                    if matching_lines := [
+                        line for line in lines if keyword in line
+                    ]:
                         print(f"Occurrences de '{keyword}' dans le fichier {file_path}:")
                         for line in matching_lines:
                             print(line.strip())
