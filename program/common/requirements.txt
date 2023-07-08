@@ -1,3 +1,5 @@
 rich
 tabulate
 tqdm
+shutil
+terminos

@@ -3,6 +3,7 @@ import pathlib
 from datetime import datetime
 from pathlib import Path
 from typing import Tuple
+import shutil
 
 from rich import box, print
 from rich.console import Console
@@ -42,10 +43,10 @@ def helps(args):
 
     elif args[0] == "-littleos":
         print(". -v : show the version of the OS")
-        print(". -doc : show the oficial documentation of the OS")
+        print(". -doc : show the official documentation of the OS")
 
     elif args[0] == "-python":
-        print(". -doc : show the official documentation of python")
+        print(". -doc : show the official documentation of Python")
 
     elif args[0] == "-ls":
         print(". -fi / -file : shows only files")
@@ -54,8 +55,28 @@ def helps(args):
     elif args[0] == "-clear":
         print("Deletes all previous commands, needs no arguments to run")
 
+    elif args[0] == "-cp":
+        print(". <source> <destination> : copy file or directory")
+
+    elif args[0] == "-mv":
+        print(". <source> <destination> : move file or directory")
+
+    elif args[0] == "-cat":
+        print(". <file> : display file content")
+
+    elif args[0] == "-echo":
+        print(". <text> : display text")
+
+    elif args[0] == "-grep":
+        print(". <keyword> <file(s)> : search for keyword in file(s)")
+
+    elif args[0] == "-head":
+        print(". <file> [num_lines] : display the first lines of a file")
+
     else:
-        console.print("[red]the argument you want to use is invalid or misspelled[/]")
+        console.print("[red]The argument you want to use is invalid or misspelled.[/]")
+
+
 
 
 def all_help():
@@ -74,7 +95,111 @@ def all_help():
           "ls -(argument) : list all files in current directory \n"
           "cd <directory> : change directory \n"
           "remove -[argument] <directory> : remove directory \n"
-          "make -[argument] <directory> : create a directory \n")
+          "make -[argument] <directory> : create a directory \n"
+          "------------------------------------------------ \n"
+          "cp <source> <destination> : copy file or directory \n"
+          "mv <source> <destination> : move file or directory \n"
+          "cat <file> : display file content \n"
+          "echo <text> : display text \n"
+          "grep <keyword> <file(s)> : search for keyword in file(s) \n"
+          "head <file> [num_lines] : display the first lines of a file \n")
+
+
+# copy
+def cp(args):
+    if len(args) < 2:
+        require_argument("cp")
+    else:
+        source = args[0]
+        destination = args[1]
+        try:
+            shutil.copy2(source, destination)
+            print(f"Le fichier {source} a été copié vers {destination}.")
+        except FileNotFoundError:
+            print(f"Le fichier {source} est introuvable.")
+        except IsADirectoryError:
+            print(f"{source} est un répertoire, utilisez l'option -r pour copier récursivement.")
+
+# move
+def mv(args):
+    if len(args) < 2:
+        require_argument("mv")
+    else:
+        source = args[0]
+        destination = args[1]
+        try:
+            shutil.move(source, destination)
+            print(f"Le fichier {source} a été déplacé vers {destination}.")
+        except FileNotFoundError:
+            print(f"Le fichier {source} est introuvable.")
+        except IsADirectoryError:
+            print(f"{source} est un répertoire, utilisez l'option -r pour déplacer récursivement.")
+
+
+# see in a file
+def cat(args):
+    if len(args) < 1:
+        require_argument("cat")
+    else:
+        file_path = args[0]
+        try:
+            with open(file_path, 'r') as file:
+                content = file.read()
+                print(content)
+        except FileNotFoundError:
+            print(f"Le fichier {file_path} est introuvable.")
+
+# head
+def head(args):
+    if len(args) < 1:
+        require_argument("head")
+    else:
+        file_path = args[0]
+        num_lines = 10  # Par défaut, affiche les 10 premières lignes
+        if len(args) > 1:
+            try:
+                num_lines = int(args[1])
+            except ValueError:
+                print("Le nombre de lignes spécifié est invalide.")
+                return
+
+        try:
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+                for line in lines[:num_lines]:
+                    print(line.strip())
+        except FileNotFoundError:
+            print(f"Le fichier {file_path} est introuvable.")
+
+# grep
+def grep(args):
+    if len(args) < 2:
+        require_argument("grep")
+    else:
+        keyword = args[0]
+        files = args[1:]
+        for file_path in files:
+            try:
+                with open(file_path, 'r') as file:
+                    lines = file.readlines()
+                    matching_lines = [line for line in lines if keyword in line]
+                    if matching_lines:
+                        print(f"Occurrences de '{keyword}' dans le fichier {file_path}:")
+                        for line in matching_lines:
+                            print(line.strip())
+                    else:
+                        print(f"Aucune occurrence de '{keyword}' dans le fichier {file_path}.")
+            except FileNotFoundError:
+                print(f"Le fichier {file_path} est introuvable.")
+
+
+# echo
+def echo(args):
+    if len(args) < 1:
+        require_argument("echo")
+    else:
+        text = ' '.join(args)
+        print(text)
 
 
 # clear command
@@ -175,29 +300,27 @@ def cd_command(args):
         print("cd: error", e.__cause__)
 
 
-def make(args): # ERROR : c'est casser !!
+def make(args):
     if not args:
         require_argument("make")
-
     elif args[0] == 'dir':
         try:
             os.makedirs(str(args[1]), exist_ok=True)
             print(f"The directory [blue]{args[1]}[/] was successfully created.")
         except Exception as e:
             print(f"Error when creating the directory {args[1]}: {str(e)}.")
-
     elif args[0] == 'file':
         try:
             with open(str(args[1]), 'w') as f:
                 f.write('')
             print(f"The file [blue]{args[1]}[/] was successfully created.")
         except FileExistsError:
-            print(f"The name [blue]{args[1]}[/] already exist.")
+            print(f"The file [blue]{args[1]}[/] already exists.")
         except Exception as e:
-            print(f"Error when creating the directory [blue]{args[1]}[/]: {str(e)}.")
+            print(f"Error when creating the file [blue]{args[1]}[/]: {str(e)}.")
+    else:
+        print(f"make takes one argument, but {len(args)} were given.")
 
-    elif len(args) > 2:
-        print(f"make takes one given argument but {len(command_tool.args)} were given.")
 
 
 def remove(args):
